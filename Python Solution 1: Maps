@@ -1,0 +1,31 @@
+class NumberContainers:
+    def __init__(self):
+        self.index_val = {}  # Maps index to number
+        self.res = {}  # Maps number to sorted list of indices
+
+    def change(self, index: int, number: int) -> None:
+        if index in self.index_val:
+            prevNum = self.index_val[index]
+            if prevNum == number:
+                return
+            self.res[prevNum].remove(index)
+            if not self.res[prevNum]:
+                del self.res[prevNum]
+        
+        self.index_val[index] = number
+        if number not in self.res:
+            self.res[number] = []
+        self.res[number].append(index)
+        self.res[number].sort()
+
+    def find(self, number: int) -> int:
+        if number not in self.res or not self.res[number]:
+            return -1
+        
+        return self.res[number][0]
+
+
+# Your NumberContainers object will be instantiated and called as such:
+# obj = NumberContainers()
+# obj.change(index,number)
+# param_2 = obj.find(number)
